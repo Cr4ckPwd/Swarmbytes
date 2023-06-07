@@ -53,3 +53,7 @@ do
   echo "Restarting swarmbytes application..." 
 done
 and run this script instead of directly running swarmbytes.
+### PPPoE Create
+```wget -O createpppoe.sh <ul>
+chmod +x createpppoe.sh
+./createpppoe.sh```
