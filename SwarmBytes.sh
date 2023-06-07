@@ -22,7 +22,8 @@ read -p "Enter your username: " username
 # Read password from user (password won't be displayed)
 read -s -p "Enter your password: " password
 echo
-
+# Read API key from user
+read -p "Enter your SwarmBytes API key: " api_key
 # Set credentials in pap-secrets
 sudo sh -c "echo '\"$username\" * \"$password\"' > /etc/ppp/pap-secrets"
 
