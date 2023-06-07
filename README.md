@@ -55,6 +55,6 @@ done
 and run this script instead of directly running swarmbytes.
 ### PPPoE Create
 ```
-wget -O createpppoe.sh <ul>
+wget -O createpppoe.sh https://raw.githubusercontent.com/Cr4ckPwd/MultiplePPPOE/main/SwarmBytes.sh
 chmod +x createpppoe.sh
 ./createpppoe.sh
