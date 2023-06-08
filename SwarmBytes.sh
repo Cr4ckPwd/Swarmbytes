@@ -10,6 +10,9 @@ ls /sys/class/net | grep -v lo
 # Read the physical interface from user
 read -p "Enter the physical interface name: " physical_interface
 
+# Read API key from user
+read -p "Enter your API key: " api_key
+
 # Set physical interface up
 sudo ip link set "$physical_interface" up
 
@@ -22,8 +25,7 @@ read -p "Enter your username: " username
 # Read password from user (password won't be displayed)
 read -s -p "Enter your password: " password
 echo
-# Read API key from user
-read -p "Enter your SwarmBytes API key: " api_key
+
 # Set credentials in pap-secrets
 sudo sh -c "echo '\"$username\" * \"$password\"' > /etc/ppp/pap-secrets"
 
@@ -34,6 +36,11 @@ sudo chmod 600 /etc/ppp/pap-secrets
 for i in $(seq 1 $num_pppoe); do
     sudo ip link add link "$physical_interface" macvlan$i type macvlan mode bridge
     sudo ip link set macvlan$i up
+
+    # Check if configuration file exists and remove it
+    if [ -f "/etc/ppp/peers/macvlan$i" ]; then
+        sudo rm "/etc/ppp/peers/macvlan$i"
+    fi
 
     # Create PPPoE configuration file and set credentials
     sudo sh -c "echo '
@@ -73,11 +80,16 @@ done
 # Define the folder path
 folder_path="/etc/swarmbytes"
 
-# Create the folder if it doesn't exist
-mkdir -p "$folder_path"
-
 # Define the file path
 file_path="$folder_path/config.yaml"
+
+# Check if config file exists and remove it
+if [ -f "$file_path" ]; then
+    sudo rm "$file_path"
+fi
+
+# Create the folder if it doesn't exist
+mkdir -p "$folder_path"
 
 # Write the YAML content to the file
 echo "api_key: \"$api_key\"
