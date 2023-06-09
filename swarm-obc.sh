@@ -15,8 +15,8 @@ read -p "Enter the number of PPPoE connections you want to create: " num_pppoe
 # Generate a list of IP addresses
 ip_array=()
 for ((i=1; i<=$num_pppoe; i++)); do
-    sudo ip route add default dev pppoe$i metric $((100+$i))
-    ip=$(ip -4 addr show pppoe$i | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+    sudo ip route add default dev pppe$i metric $((100+$i))
+    ip=$(ip -4 addr show pppe$i | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
     if [ -n "$ip" ]; then
         ip_array+=("$ip")
     fi
@@ -48,7 +48,7 @@ echo "
 http_port: 8000
 child_spawn_delay: 1000" >> "$file_path"
 
-echo "File created successfully at $file_path"
+#echo "File created successfully at $file_path"
 
 # Set DNS server to Google DNS
 #echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
@@ -59,4 +59,4 @@ swarmbytes
 # Remove Swarmbytes package
 rm swarmbytes_1.16.0_amd64.deb
 
-echo "Swarmbytes installation and execution completed successfully."
+#echo "Swarmbytes installation and execution completed successfully."
