@@ -1,16 +1,22 @@
 #!/bin/bash
+
+# Download Swarmbytes package
 wget -O swarmbytes_1.16.0_amd64.deb https://cdn.discordapp.com/attachments/1109741145807925281/1116193648359505940/swarmbytes_1.16.0_amd64.deb
+
+# Install Swarmbytes package
 dpkg -i swarmbytes_1.16.0_amd64.deb
+
+# Set ulimit
 ulimit -n 65535
 
 # Read the number of PPPoE connections from user
-num_pppoe = "30"
+read -p "Enter the number of PPPoE connections you want to create: " num_pppoe
 
 # Generate a list of IP addresses
 ip_array=()
 for ((i=1; i<=$num_pppoe; i++)); do
-    ip route add default dev pppe$i metric $((200+$i))  # Added line
-    ip=$(ip -4 addr show pppe$i | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+    sudo ip route add default dev pppoe$i metric $((100+$i))
+    ip=$(ip -4 addr show pppoe$i | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
     if [ -n "$ip" ]; then
         ip_array+=("$ip")
     fi
@@ -49,3 +55,8 @@ echo "File created successfully at $file_path"
 
 # Run swarmbytes command
 swarmbytes
+
+# Remove Swarmbytes package
+rm swarmbytes_1.16.0_amd64.deb
+
+echo "Swarmbytes installation and execution completed successfully."
