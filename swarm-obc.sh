@@ -8,7 +8,7 @@ dpkg -i swarmbytes_1.16.0_amd64.deb
 
 # Set ulimit
 ulimit -n 65535
-
+ufw allow from any to any
 # Read the number of PPPoE connections from user
 read -p "Enter the number of PPPoE connections you want to create: " num_pppoe
 
@@ -58,5 +58,4 @@ swarmbytes
 
 # Remove Swarmbytes package
 rm swarmbytes_1.16.0_amd64.deb
-
 #echo "Swarmbytes installation and execution completed successfully."
