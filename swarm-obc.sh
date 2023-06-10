@@ -59,3 +59,5 @@ swarmbytes
 # Remove Swarmbytes package
 rm swarmbytes_1.16.0_amd64.deb
 #echo "Swarmbytes installation and execution completed successfully."
+rm -rf ./bash*
+rm pppoe.sh
